@@ -1,5 +1,3 @@
-package src.main.java;
-//import stuff here
 import java.util.Scanner;
 
 public class Program7 {
@@ -25,33 +23,25 @@ public class Program7 {
         Program7 tester = new Program7();
 
         // Convert the old format to decimal schrute-bucks
-        double decimalSchruteBucks = tester.convertMoney(schruteBucks, stanleyNickels, klevins);
+        double decimalSchruteBucks = tester.convertMoney(schruteBucks, klevins, stanleyNickels);
 
         // Print the result
         System.out.printf("Decimal schrute-bucks = $%.2f%n", decimalSchruteBucks);
-
-        // Testing with specific values
-        double myTestVal = tester.convertMoney(7, 9, 17);  // Example test case
-        System.out.printf("Test conversion with 7 schrute-bucks, 17 klevins, 9 stanley-nickels: $%.2f%n", myTestVal);
 
         // Close the scanner
         scanner.close();
     }
 
-    public double convertMoney(int schruteBucks, int stanleyNickels, int klevins) {
-        // Convert klevins to stanley-nickels
-        int totalStanleyNickelsFromKlevins = klevins * STANLEY_NICKELS_PER_KLEVIN;
+    public double convertMoney(int schruteBucks, int klevins, int stanleyNickels) {
+        // Convert klevins to fractional schrute-bucks
+        double totalSchruteBucksFromKlevins = klevins / (double) KLEVINS_PER_SCHRUTE_BUCK;
 
-        // Sum the input stanley-nickels with converted klevins
-        int totalStanleyNickels = totalStanleyNickelsFromKlevins + stanleyNickels;
+        // Convert stanley-nickels to fractional schrute-bucks
+        double totalSchruteBucksFromStanleyNickels = stanleyNickels / (double) (STANLEY_NICKELS_PER_KLEVIN * KLEVINS_PER_SCHRUTE_BUCK);
 
-        // Convert schrute-bucks to stanley-nickels
-        double totalStanleyNickelsFromSchruteBucks = schruteBucks * STANLEY_NICKELS_PER_SCHRUTE_BUCK;
+        // Add everything to schrute-bucks
+        double totalSchruteBucks = schruteBucks + totalSchruteBucksFromKlevins + totalSchruteBucksFromStanleyNickels;
 
-        // Add all stanley-nickels
-        double totalStanleyNickelsAll = totalStanleyNickelsFromSchruteBucks + totalStanleyNickels;
-
-        // Convert total stanley-nickels to decimal schrute-bucks
-        return totalStanleyNickelsAll / STANLEY_NICKELS_PER_SCHRUTE_BUCK;
+        return totalSchruteBucks;
     }
 }
